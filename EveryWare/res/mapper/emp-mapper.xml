@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="emp">
+	<select id="getEmp" parameterType="String" resultType="empVo">
+		SELECT * FROM employees WHERE emp_id = #{emp_id} AND emp_pass = #{emp_pass}
+	</select>
+	
+<!-- 	<insert id="insertEmp"></insert> -->
+	
+<!-- 	<update id="upEmp"></update> -->
+	
+<!-- 	<delete id="delEmp"></delete> -->
+</mapper>

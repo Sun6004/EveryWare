@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 문서는 mybatis의 환경 설정에 사용되는 XML문서입니다. -->
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- DB정보가 저장된 properties파일 정보 설정하기-->
+<properties resource = "config/dbinfo.properties"/>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings> 
+	<!-- typeAlais 설정하기 (VO여러개 설정가능)-->
+	<typeAliases>
+		<typeAlias type="everyware.vo.EmployeesVO" alias="empVo"/>
+		
+	</typeAliases>
+	
+	<!-- DB연결 설정 -->
+	<environments default="oracleEnv">
+		<environment id="oracleEnv">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${user}"/>
+				<property name="password" value="${pass}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!--  mapper -->
+	<mappers>
+		<mapper resource="/mapper/emp-mapper.xml"/>	
+	</mappers>
+</configuration>

@@ -1,0 +1,209 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  padding: 10px;
+  background: #f1f1f1;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+}
+/* Header/Blog Title */
+header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 50px;
+  border-radius: 15px;
+  background: #162938;
+  display: flex;
+  flex-grow: calc();
+  justify-content: space-between;
+  align-items: center;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  /* background: red; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.logo {
+  font-size: 3em;
+  margin: 10px 0;
+  color: #fff;
+  user-select: none;
+}
+.navtime {
+  border: 1px solid white;
+  border-radius: 10px;
+}
+.navigation a {
+  position: relative;
+  font-size: 1.1em;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0%;
+}
+
+.navigation a::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  bottom: -6px;
+  width: 80%;
+  height: 3px;
+  background: #fff;
+  border-radius: 5px;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: 0.5s;
+}
+
+.navigation a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 15%;
+  /* transition: 1s; */
+  /* transform: translateX(5em); */
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 85%;
+  height: 800px;
+  padding-left: 20px;
+  /* border: 1px solid red; */
+  overflow: hidden;
+}
+
+.card.clo {
+  transition: 1s;
+  transform: translateY(80em);
+  /* display: none; */
+  /* transform-origin: left; */
+}
+/* Fake image */
+.fakeimg {
+  text-align: center;
+  border-radius: 15px;
+  background-color: #aaa;
+  margin-top: 5px;
+  width: 100%;
+  padding: 20px;
+}
+/* Add a card effect for articles */
+.card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  transition: 1s;
+  transform: translateY(0em);
+}
+
+.card a,
+p,
+h1 {
+  text-align: center;
+  text-decoration: none;
+  color: #162938;
+  font-size: 24px;
+  font-weight: 550;
+}
+.fakeimg p {
+  margin-bottom: 40px;
+}
+.card p:hover {
+  color: white;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+iframe {
+  border: 1px yellow solid;
+  margin-top: 15px;
+  border-radius: 15px;
+  /* transition: 1s; */
+}
+
+.comp {
+  transition: 1s;
+  transform: translateY(80em);
+  /* display: none; */
+}
+
+.comp.open {
+  /* display: block; */
+
+  transition: 1s;
+  transform: translateY(-48em);
+}
+
+.icon ion-icon {
+  color: #fff;
+  font-size: 3em;
+  margin-left: 30px;
+}
+
+#current-time {
+  color: #fff;
+  font-size: 30px;
+}
+
+.ca {
+  width: 49.5%;
+  background: #fff;
+  height: 100px;
+  border: 1px solid red;
+  border-radius: 15px;
+
+  display: inline-block;
+}
+
+.card button {
+  margin-left: 5.5%;
+  background: #162938;
+  height: 50px;
+  width: 40%;
+  font-size: 20px;
+  font-weight: 300;
+  border-radius: 15px;
+  border: none;
+  color: #fff;
+}
+.card button:hover {
+  background: #f1f1f1;
+  color: #162938;
+  font-weight: 300;
+}
+
+.fakeimg.op {
+  color: #162938;
+  font-size: 30px;
+}

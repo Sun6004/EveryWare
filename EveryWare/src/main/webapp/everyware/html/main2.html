@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../js/jquery-3.6.4.min.js" type="text/javaScript"></script>
+
+    <title>Document</title>
+
+    <script>
+      $(function () {
+        $("#btn").on("click", function () {
+          // alert(123);
+          // $("#m1").css("display", "none");
+          $(".m1").addClass("m2");
+        });
+        $("#btn2").on("click", function () {
+          // alert(123);
+          // $("#m1").css("display", "none");
+          $(".m1").removeClass("m2");
+        });
+      });
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #top-menu {
+        background: red;
+        height: 5%;
+        width: 100%;
+        /* position: absolute; */
+        /* display: flex; */
+        /* float: tp; */
+        z-index: 0;
+      }
+
+      #left-menu {
+        background: gray;
+        /* position: absolute; */
+        display: flex;
+        flex-direction: column;
+        /* display: ; */
+        height: 95%;
+        width: 7%;
+        /* z-index: 99; */
+        float: left;
+        font-size: 20px;
+      }
+      #left-menu a {
+        margin-bottom: 10px;
+      }
+      div {
+        border: 1px solid blue;
+        text-align: center;
+      }
+
+      #mm1 {
+        /* border: 1px solid red; */
+        /* display: flex; */
+        /* box-sizing: border-box; */
+        height: 95%;
+        width: 93%;
+        float: left;
+        padding-top: 5px;
+        padding: 5px;
+        overflow: hidden;
+      }
+      .m1 {
+        height: 100%;
+        width: 100%;
+        background: skyblue;
+        /* display: none; */
+        transition: 0.5s ease;
+        transform: translateX(-100em);
+      }
+
+      .m2 {
+        transition: none;
+        transform: translateX(0);
+        transition: 0.5s ease;
+        /* display: none; */
+        z-index: 0;
+      }
+      input {
+        height: 100px;
+        width: 100px;
+        padding: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div> -->
+    <div id="top-menu">
+      우측 상단 간단한 자기 메뉴 있는 곳 , 간단한 정보 시간 등
+    </div>
+
+    <div id="left-menu">
+      버튼 무조건 눌러보세요
+      <!-- <br /> -->
+      <input type="button" value="생성" id="btn" />
+      <input type="button" value="삭제" id="btn2" />
+
+      <a href="#">예시메뉴</a>
+      <!-- <br /> -->
+      <a href="#">게시판</a>
+      <!-- <br /> -->
+      <a href="#">일정</a>
+      <!-- <br /> -->
+      <a href="#">이메일</a>
+      <!-- <br /> -->
+      <a href="#">결제</a>
+      <!-- <br /> -->
+    </div>
+    <div id="mm1">
+      <div class="m1">
+        여기가 컨텐츠 내용이라면
+        <br />
+        제이플레임 안쓰면 밖으로 사라지게 만들기
+      </div>
+    </div>
+  </body>
+</html>

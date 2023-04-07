@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EveryWare</title>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <link rel="stylesheet" href="../css/mainstyle.css" />
+    <script src="../js/jquery-3.6.4.min.js"></script>
+    <!-- <script src="../js/MainScripy.js"></script> -->
+
+    <script>
+      $(function () {
+        $(".logo").on("click", () => {
+          $(".card.clo").removeClass("clo");
+          $(".comp").removeClass("open");
+        });
+
+        // $(".open-menu").on("click", function () {
+        //   $(".rightcolumn .card").addClass("clo");
+        //   $(".comp").addClass("open"); 아래껄로 지원
+        //   $(".comp").attr("src", "../html/LoginView.html");
+        // });
+
+        $(".open-menu").on("click", function () {
+          setTimeout(function () {
+            $(".rightcolumn .card").addClass("clo");
+            $(".comp").removeClass("open");
+          }, 100);
+          setTimeout(function () {
+            $(".comp").addClass("open");
+            $(".comp").attr("src", "../html/LoginView.html");
+          }, 400);
+        });
+
+        $(".open-menu2").on("click", function () {
+          setTimeout(function () {
+            $(".rightcolumn .card").addClass("clo");
+            $(".comp").removeClass("open");
+          }, 100);
+          setTimeout(function () {
+            $(".comp").addClass("open");
+            $(".comp").attr("src", "../html/main.html");
+          }, 400);
+        });
+
+        $(".btn1").on("click", function () {
+          $(".fakeimg.op").text(getCurrentTime);
+        });
+      });
+      function getCurrentTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+
+        if (hours < 10) {
+          hours = "0" + hours;
+        }
+        if (minutes < 10) {
+          minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+
+        var timeString = hours + ":" + minutes + ":" + seconds;
+        return timeString;
+      }
+
+      // 1초마다 현재 시간을 업데이트하는 함수
+      function updateTime() {
+        var currentTimeString = getCurrentTime();
+        document.getElementById("current-time").textContent = currentTimeString;
+      }
+
+      // 1초마다 updateTime 함수를 호출하여 현재 시간을 업데이트합니다.
+      setInterval(updateTime, 1000);
+    </script>
+  </head>
+  <body>
+    <header>
+      <h2 class="logo">EveryWare</h2>
+      <nav class="navigation">
+        <span id="current-time" class="navtime"></span>
+
+        <a
+          ><span class="icon"
+            ><ion-icon name="partly-sunny-outline"></ion-icon></span
+        ></a>
+        <a
+          ><span class="icon"
+            ><ion-icon name="notifications-outline"></ion-icon></span
+        ></a>
+        <a
+          ><span class="icon"
+            ><ion-icon name="person-circle-outline"></ion-icon></span
+        ></a>
+      </nav>
+    </header>
+
+    <div class="row">
+      <div class="leftcolumn">
+        <div class="card">
+          <h1>MENU</h1>
+          <div class="fakeimg" style="height: 420px">
+            <br />
+            <p href="#" class="open-menu">회사 일정</p>
+            <p href="#" class="open-menu2" id="in1">회사 게시판</p>
+            <p href="#" class="open-menu">회사 결제</p>
+            <p href="#" class="open-menu">회사 이메일</p>
+            <p href="#" class="open-menu">회사 내용</p>
+          </div>
+        </div>
+        <div class="card">
+          <button class="btn1">출근</button>
+          <button class="btn1">퇴근</button>
+          <div class="fakeimg op" style="height: 80px">출근/퇴근</div>
+        </div>
+      </div>
+
+      <div class="rightcolumn">
+        <!-- <div class="ca">우선 만들어둠 아직 미정</div>
+        <div class="ca">우선 만들어둠 아직 미정</div> -->
+
+        <div class="card">
+          <h2>content</h2>
+          <div class="fakeimg" style="height: 100px">
+            여기서 종합적으로 보는 곳 , 왼쪽 메뉴에서 누르면 여기서 뜨는데
+            여기는 홈이라 여러개 뜨고, 원래는 하나씩 뜨는게 맞는거
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Every 게시판</h3>
+          <div class="fakeimg"><p>내용1</p></div>
+          <div class="fakeimg"><p>내용1</p></div>
+          <div class="fakeimg"><p>내용1</p></div>
+        </div>
+
+        <iframe
+          class="comp"
+          src=""
+          frameborder="0"
+          width="100%"
+          height="760px"
+        ></iframe>
+      </div>
+    </div>
+  </body>
+</html>
