@@ -4,10 +4,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="emp">
-	<select id="getEmp" parameterType="String" resultType="empVo">
+	<select id="getEmp" parameterType="empVo" resultType="empVo">
 		SELECT * FROM employees WHERE emp_id = #{emp_id} AND emp_pass = #{emp_pass}
 	</select>
 	
+	<select id="getApprove" parameterType="String" resultType="empVo">
+		select emp_approve from employees where emp_id = #{emp_id}
+	</select>
 <!-- 	<insert id="insertEmp"></insert> -->
 	
 <!-- 	<update id="upEmp"></update> -->
