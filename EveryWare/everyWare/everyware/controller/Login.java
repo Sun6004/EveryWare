@@ -28,17 +28,18 @@ public class Login extends HttpServlet {
 		String empId = request.getParameter("empId");
 		String empPass = request.getParameter("empPass");
 		
-		IEmpservice service = EmpServiceImpl.getInstance();
 		
 		EmployeesVO vo = new EmployeesVO();
 		
+		
 		vo.setEmp_id(empId);
 		vo.setEmp_pass(empPass);
-		
+	
+		IEmpservice service = EmpServiceImpl.getInstance();
 		EmployeesVO res = service.getEmp(vo);
-		
-		System.out.println(vo.getEmp_approve());
-		
+		int empApprove = res.getEmp_approve();
+		System.out.println("servlet: "+empApprove);
+			
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(res);
 		
@@ -48,9 +49,11 @@ public class Login extends HttpServlet {
 
 	    // 로그인 성공 시, 세션에 사용자 VO 객체를 저장하는 코드
 	    if (res != null) { // 로그인 성공
+	    	
+	    	
 	        HttpSession session = request.getSession(); // 세션 객체 생성
 	        session.setAttribute("userVO", res); // 세션에 사용자 VO 객체 저장
-	        
+	        EmployeesVO evo = (EmployeesVO) session.getAttribute("userVO");    
 	        // 세션 유효 시간 설정 (30분)
 	        session.setMaxInactiveInterval(30 * 60);
 
@@ -61,6 +64,7 @@ public class Login extends HttpServlet {
 	            @Override
 	            public void run() {
 	                session.invalidate();
+	         
 	            }
 	        }, 30 * 60 * 1000);  // 30분 후에 삭제 실행
 	    }

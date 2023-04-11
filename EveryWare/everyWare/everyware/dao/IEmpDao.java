@@ -16,5 +16,7 @@ public interface IEmpDao {
 	
 	public int updateApprove(EmployeesVO vo);
 	
+	public List<EmployeesVO> getEmpList();
 	
+	public int empApprove(String memId);
 }

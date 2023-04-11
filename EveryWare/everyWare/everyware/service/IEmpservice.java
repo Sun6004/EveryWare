@@ -17,4 +17,8 @@ public interface IEmpservice {
 		
 	public int getApprove(String emp_id);
 	
+	public List<EmployeesVO> getEmpList();
+	
+	public int empApprove(String memId);
+	
 }

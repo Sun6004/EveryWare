@@ -61,6 +61,10 @@ public class EmpDaoImpl implements IEmpDao{
 			session = MybatisSqlsessionFactory.getSqlSession();
 			res = session.selectOne("emp.getEmp", vo);
 			
+		    String empId = vo.getEmp_id();
+	        EmployeesVO empApprove = session.selectOne("emp.getEmpApprove", empId);
+	        res.setEmp_approve(empApprove.getEmp_approve());
+	        System.out.println("dao: " + empApprove.getEmp_approve());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {		
@@ -86,6 +90,41 @@ public class EmpDaoImpl implements IEmpDao{
 		}
 		return res;
 		
+	}
+
+	@Override
+	public List<EmployeesVO> getEmpList() {
+		
+		SqlSession session = null;
+		List<EmployeesVO> list = null;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			list = session.selectList("emp.getEmpList");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public int empApprove(String emp_id) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			res = session.update("emp.empApprove", emp_id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return res;
 	}
 
 	

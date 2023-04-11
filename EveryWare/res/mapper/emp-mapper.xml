@@ -11,9 +11,18 @@
 	<select id="getApprove" parameterType="String" resultType="empVo">
 		select emp_approve from employees where emp_id = #{emp_id}
 	</select>
-<!-- 	<insert id="insertEmp"></insert> -->
-	
-<!-- 	<update id="upEmp"></update> -->
+	<insert id="addEmp" parameterType="empVo">
+		insert into employees (emp_no, emp_id, emp_pass, emp_name, dept_id, position_id, emp_idno, emp_tel, emp_addr, emp_mail, emp_date)
+						values (emp_seq.nextval , #{emp_id}, #{emp_pass}, #{emp_name}, #{dept_id} , #{position_id} , #{emp_idno}, #{emp_tel}, 
+						#{emp_addr}, #{emp_date}, sysdate)
+	</insert>
+		
+	<select id="getEmpList" resultType="empVo">
+		select * from employees where emp_approve = 0
+	</select>
+	<update id="empApprove" parameterType="String">
+		update employees set emp_approve = 1 where emp_id = #{emp_id}
+	</update>
 	
 <!-- 	<delete id="delEmp"></delete> -->
 </mapper>

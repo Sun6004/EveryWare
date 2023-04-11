@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>관리자 페이지</h1>
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>DEPT_ID</th>
+				<th>POSITION_ID</th>
+				<th>전화번호</th>
+				<th>메일</th>
+				<th>가입승인</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for (EmployeesVO emp : list) { %>
+			<tr>
+				<td><%= emp.getEMP_ID() %></td>
+				<td><%= emp.getEMP_NAME() %></td>
+				<td><%= emp.getDEPT_ID() %></td>
+				<td><%= emp.getPOSITION_ID() %></td>
+				<td><%= emp.getEMP_TEL() %></td>
+				<td><%= emp.getEMP_MAIL() %></td>
+				<td><%= emp.getEMP_APPROVE() %></td>
+			</tr>
+			<% } %>
+		</tbody>
+	</table>
+</body>
+</html>

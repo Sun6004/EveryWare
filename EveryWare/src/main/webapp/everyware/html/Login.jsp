@@ -14,39 +14,34 @@
 $(function(){
 		//로그인
 	  $('#logIn').on('click', function() {
-	    $.ajax({
-	      type: 'POST',
-	      url: '<%=request.getContextPath()%>/login.do',
-	      data: $('#form').serialize(),
-	      success: function(res) {
-	    	  console.log(res);
-	        if (res == null) {
-	        	alert('로그인에 실패했습니다.');
-	        } else {
-	         	alert('로그인에 성공했습니다. 환영합니다.');
-	         // Ajax 요청 - getApprove
-	            $.ajax({
-	                type: 'POST',
-	                url: '<%=request.getContextPath()%>/loginCheck.do',
-	                data: {emp_id: res.emp_id},
-	                success: function(res) {
-	                console.log(res);
-	                // 여기에서 emp_approve 값을 이용하여 다음 동작 수행
-	                },
-	                error: function() {
-	                    alert('emp_approve 값을 가져오는데 실패하였습니다.');
-	                },
-	                dataType: 'json'
-	            });
-	         	window.location.href = 'main.html';
-	        }
-	      },
-	      error: function() {
-	        alert('로그인 요청 실패');
-	      },
-	      dataType: 'json'
-	    })
-	    
+		  var empId = $('#empId').val(); // 입력한 아이디
+		  var empPass = $('#empPass').val(); // 입력한 비밀번호
+		  if (empId === 'admin' && empPass === '1234') { // 입력한 아이디와 비밀번호가 admin과 1234인 경우
+		        window.location.href = '<%=request.getContextPath()%>/AdminView.do'; // 관리자 페이지로 이동
+		    } else { // 입력한 아이디와 비밀번호가 admin과 1234가 아닌 경우
+			    $.ajax({
+			      type: 'POST',
+			      url: '<%=request.getContextPath()%>/AdminView.do',
+			      data: $('#form').serialize(),
+			      success: function(res) {
+			    	  console.log(res);
+			        if (res == null) {
+			        	alert('로그인 실패. 아이디와 비밀번호를 확인해주세요');
+			        } else {
+			        	if (res.emp_approve == 1) {
+			                alert('로그인에 성공했습니다. 인증된 회원입니다.');
+		 	                window.location.href = 'main.html';
+			            } else {
+			                alert('로그인에 성공했습니다. 인증되지 않은 회원입니다.');
+			            }		        
+			      }
+			      },
+			      error: function() {
+			        alert('로그인 실패. 아이디와 비밀번호를 확인해주세요');
+			      },
+			      dataType: 'json'
+			    });
+	  }
 	  })//로그인
 	  
 	  //로그아웃
@@ -64,6 +59,10 @@ $(function(){
 				dataType : 'json'
 			})
 		}) //로그아웃
+		
+		$('#join').on('click', function(){
+			 window.location.href = 'join.jsp';
+		})
 
 	}) //function
 </script>
@@ -83,6 +82,10 @@ $(function(){
 		<p>
 			<button type="button" id="logIn">로그인</button>
 			<button type="button" id="logOut">로그아웃</button>
+			<button type="button" id="join">회원가입</button>			
 		</p>
+		
 	</form>
+	
+		
 </body>
