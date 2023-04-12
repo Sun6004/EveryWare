@@ -9,24 +9,31 @@
 	type="text/javascript"></script>
 <title>Insert title here</title>
 <script type="text/javascript">
-// 	$(function(){
-// 		 $('#ok').on('click', function(){
-// 			 $.ajax({
-// 				 type: 'POST',
-<%-- 			      url: '<%=request.getContextPath()%>/addEmp.do', --%>
-// 			      data: $('#form').serialize(),    	
-// 				  success : function(res) {
-// 				    	window.location.href = 'Login.jsp';
-// 						alert(res);
-							
-// 						},
-// 						error : function(xhr) {
-// 							alert(xhr.status+"회원가입 실패");
-// 						},
-// 						dataType : 'json'
-// 			 })
-// 		 })
-// 	})//function
+	$(function(){
+		$('#idCheck').on('click', function(){
+			var id = $('#empId').val();
+			if(id == ""){
+				alert("id를 입력하세요.");
+				return;
+			}
+			
+			$.ajax({
+				url : '<%=request.getContextPath()%>/IdCheck.do',
+				data : {"empId" : id},
+				dataType : 'json',
+				success : function(res) {
+					if(res == "ok"){
+						$('#res').html("사용가능한 아이디 입니다.");
+					}else{
+						$('#res').html("중복된 아이디입니다.");
+					}
+				},
+				error :function(xhr){
+					alert("에러: " + xhr.status);
+				}
+			})
+		});
+	})
 </script>
 </head>
 <body>
@@ -36,6 +43,8 @@
 		<div class="input-box">
 			<span class="icon"> <ion-icon name="mail-outline"></ion-icon>
 			</span> <input type="emil" required id="empId" name="empId"/> <label for="">아이디</label>
+			<input type="button" id="idCheck" value="중복확인">
+			<span id="res"></span>
 		</div>
 
 		<div class="input-box">
@@ -45,8 +54,7 @@
 
 		<div class="input-box">
 			<span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-			<input type="emil" required id="empName" name="empName"/> <label for="">이
-				름</label>
+			<input type="emil" required id="empName" name="empName"/> <label for="">이름</label>
 		</div>
 
 		<div class="input-box">
@@ -85,6 +93,7 @@
 		<div class="login-register">
 			<p>
 				<a href="Login.jsp" class="login-link">로그인</a>
+				<a href="find.jsp" class="find-link">비밀번호 찾기</a>
 			</p>
 		</div>
 	</form>

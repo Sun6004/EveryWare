@@ -51,6 +51,27 @@ public class EmpServiceImpl implements IEmpservice{
 		// TODO Auto-generated method stub
 		return dao.empApprove(emp_id);
 	}
+	@Override
+	public int idCheck(String emp_id) {
+		// TODO Auto-generated method stub
+		return dao.idCheck(emp_id);
+	}
+	@Override
+	public EmployeesVO findPass(String emp_id) {
+		// TODO Auto-generated method stub
+		return dao.findPass(emp_id);
+	}
+	@Override
+	public List<EmployeesVO> allEmpList() {
+		// TODO Auto-generated method stub
+		return dao.allEmpList();
+	}
+	@Override
+	public int setPosi(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.setPosi(map);
+	}
+	
 
 	
 

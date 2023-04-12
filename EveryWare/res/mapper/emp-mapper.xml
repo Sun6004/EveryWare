@@ -4,25 +4,53 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="emp">
+	<!--로그인 -->
 	<select id="getEmp" parameterType="empVo" resultType="empVo">
 		SELECT * FROM employees WHERE emp_id = #{emp_id} AND emp_pass = #{emp_pass}
 	</select>
 	
+	<!--회원가입 승인여부 검사(로그인시 확인) -->
 	<select id="getApprove" parameterType="String" resultType="empVo">
 		select emp_approve from employees where emp_id = #{emp_id}
 	</select>
+	
+	<!--회원가입 -->
 	<insert id="addEmp" parameterType="empVo">
-		insert into employees (emp_no, emp_id, emp_pass, emp_name, dept_id, position_id, emp_idno, emp_tel, emp_addr, emp_mail, emp_date)
-						values (emp_seq.nextval , #{emp_id}, #{emp_pass}, #{emp_name}, #{dept_id} , #{position_id} , #{emp_idno}, #{emp_tel}, 
-						#{emp_addr}, #{emp_date}, sysdate)
+		insert into employees (emp_no, emp_id, emp_pass, emp_name, dept_id, emp_idno, emp_tel, emp_addr, emp_mail, emp_date)
+						values (emp_seq.nextval , #{emp_id}, #{emp_pass}, #{emp_name}, #{dept_id} , #{emp_idno}, #{emp_tel}, 
+						#{emp_addr}, #{emp_mail}, sysdate)
 	</insert>
 		
+	<!--회원가입 승인 대기중인 사원 검색(관리자) -->	
 	<select id="getEmpList" resultType="empVo">
 		select * from employees where emp_approve = 0
 	</select>
+	
+	<!--전체 사원 검색 -->	
+	<select id="allEmpList" resultType="empVo">
+		select * from employees
+	</select>
+	
+	<!--회원가입 승인처리(관리자) -->
 	<update id="empApprove" parameterType="String">
 		update employees set emp_approve = 1 where emp_id = #{emp_id}
 	</update>
 	
+	<!-- 회원탈퇴 -->
 <!-- 	<delete id="delEmp"></delete> -->
+
+	<!--id 중복검사 -->
+	<select id="idCheck" parameterType="string" resultType="int">
+		select count(*) cnt from employees where emp_id = #{emp_id}
+	</select>
+	
+	<!--비밀번호찾기 -->
+	<select id="findPass" parameterType="String" resultType="empVo">
+		select * from employees where emp_id = #{emp_id}
+	</select>
+	
+	<!-- 직급수정(관리자) -->
+	<update id="setPosi" parameterType="map">
+		update employees set position_id = #{position_id} where emp_id = #{emp_id}
+	</update>
 </mapper>

@@ -19,6 +19,13 @@ public interface IEmpservice {
 	
 	public List<EmployeesVO> getEmpList();
 	
-	public int empApprove(String memId);
+	public List<EmployeesVO> allEmpList();
 	
+	public int empApprove(String emp_id);
+	
+	public int idCheck (String emp_id);
+	
+	public EmployeesVO findPass(String emp_id);
+
+	public int setPosi(Map<String, String> map);
 }

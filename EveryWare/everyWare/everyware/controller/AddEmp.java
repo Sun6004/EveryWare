@@ -31,16 +31,25 @@ public class AddEmp extends HttpServlet {
 		String empId = request.getParameter("empId");
 		String empPass = request.getParameter("password");
 		String empName = request.getParameter("empName");
-		String post = request.getParameter("dept");
+		String posi = request.getParameter("dept");
 		String idno = request.getParameter("idno");
 		String empTel = request.getParameter("tel");
 		String addr = request.getParameter("addr");
 		String mail = request.getParameter("email");
 		
+//		System.out.println(empId);
+//		System.out.println(empPass);
+//		System.out.println(empName);
+//		System.out.println(posi);
+//		System.out.println(idno);
+//		System.out.println(empTel);
+//		System.out.println(addr);
+//		System.out.println(mail);
+		
 		vo.setEmp_id(empId);
 		vo.setEmp_pass(empPass);
 		vo.setEmp_name(empName);
-		vo.setDept_id(post);
+		vo.setDept_id(posi);
 		vo.setEmp_idno(idno);
 		vo.setEmp_tel(empTel);
 		vo.setEmp_addr(addr);

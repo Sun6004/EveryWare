@@ -21,7 +21,7 @@ $(function(){
 		    } else { // 입력한 아이디와 비밀번호가 admin과 1234가 아닌 경우
 			    $.ajax({
 			      type: 'POST',
-			      url: '<%=request.getContextPath()%>/AdminView.do',
+			      url: '<%=request.getContextPath()%>/login.do',
 			      data: $('#form').serialize(),
 			      success: function(res) {
 			    	  console.log(res);
@@ -32,7 +32,7 @@ $(function(){
 			                alert('로그인에 성공했습니다. 인증된 회원입니다.');
 		 	                window.location.href = 'main.html';
 			            } else {
-			                alert('로그인에 성공했습니다. 인증되지 않은 회원입니다.');
+			                alert('가입 승인되지 않은 회원입니다.');
 			            }		        
 			      }
 			      },
@@ -63,6 +63,11 @@ $(function(){
 		$('#join').on('click', function(){
 			 window.location.href = 'join.jsp';
 		})
+		
+		//비밀번호 찾기
+		$('#find').on('click', function(){
+			window.location.href = 'find.jsp';
+		})
 
 	}) //function
 </script>
@@ -72,9 +77,12 @@ $(function(){
 	<h1>로그인</h1>
 	<form method="post" id="form">
 		<p>
-			<label for="empId">아이디:</label> <input type="text" id="empId"
-				name="empId" required>
+		
+			<label for="empId">아이디:</label> 
+			<input type="text" id="empId" name="empId" required>
+			<input class="form-check-input" type="checkbox" name="remember"> 아이디 기억하기
 		</p>
+
 		<p>
 			<label for="empPass">비밀번호:</label> <input type="password"
 				id="empPass" name="empPass" required>
@@ -83,6 +91,7 @@ $(function(){
 			<button type="button" id="logIn">로그인</button>
 			<button type="button" id="logOut">로그아웃</button>
 			<button type="button" id="join">회원가입</button>			
+			<button type="button" id="find">비밀번호찾기</button>			
 		</p>
 		
 	</form>

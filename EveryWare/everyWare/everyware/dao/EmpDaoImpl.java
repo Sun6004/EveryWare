@@ -127,6 +127,74 @@ public class EmpDaoImpl implements IEmpDao{
 		return res;
 	}
 
+	@Override
+	public int idCheck(String emp_id) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			res = session.selectOne("emp.idCheck", emp_id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public EmployeesVO findPass(String emp_id) {
+		SqlSession session = null;
+		EmployeesVO res = null;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			res = session.selectOne("emp.findPass", emp_id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public List<EmployeesVO> allEmpList() {
+		SqlSession session = null;
+		List<EmployeesVO> list = null;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			list = session.selectList("emp.allEmpList");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public int setPosi(Map<String, String> map) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			res = session.update("emp.setPosi", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return res;
+	}
+
 	
 
 }
