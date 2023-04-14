@@ -13,44 +13,54 @@
     <script type="text/javascript">
     
 $(function(){
-		//로그인
+		
+	//로그인
 	  $('.btn').on('click', function() {
 		  var empId = $('#empId').val(); // 입력한 아이디
 		  var empPass = $('#empPass').val(); // 입력한 비밀번호
-		  if (empId == 'admin' && empPass =='1234') { // 입력한 아이디와 비밀번호가 admin과 1234인 경우
-			  	//alert("관리자 입니다.");
- 		        window.location.href = '<%=request.getContextPath()%>/AdminView.do'; // 관리자 페이지로 이동
-					
-		    } else { // 입력한 아이디와 비밀번호가 admin과 1234가 아닌 경우
 			    $.ajax({
 			      type: 'POST',
 			      url: '<%=request.getContextPath()%>/login.do',
 			      data: $('#form').serialize(),
-			      success: function(res) {
+			      success: function(res) {	  		
 			    	  console.log(res);
 			        if (res == null) {
-			        	alert('로그인 실패. 아이디와 비밀번호를 확인해주세요');
+			        	Swal.fire({
+			        		  icon: 'error',
+			        		  title:'로그인 실패!',
+			        		  text: '아이디와 비밀번호를 확인해주세요.',
+			        		  showConfirmButton: false,
+			        		  timer: 1500
+			        		})
+		
 			        } else {
-			        	if (res.emp_approve == 1) {
-
+			        	if(empId == 'admin'){
+			        		window.location.href = '<%=request.getContextPath()%>/AdminView.do';
+			        	}else if (res.emp_approve == 1) {
 		 	                window.location.href = 'MainPage.jsp';
 			            } else {
 			            	 Swal.fire({
 				        		  icon: 'error',
 				        		  title: '인증되지 않은 회원입니다.',
-				        		  text: '가입승이 완료된 후 시도해주세요.',
+				        		  text: '가입승인 완료된 후 시도해주세요.',
 				        		  showConfirmButton: false,
 				        		  timer: 1500
 				        		})
-			            }		        
+			            
+			        	}
 			      }
 			      },
 			      error: function() {
-			        alert('로그인 실패. 아이디와 비밀번호를 확인해주세요');
+			    	  Swal.fire({
+		        		  icon: 'error',
+		        		  title:'로그인 실패!',
+		        		  text: '아이디와 비밀번호를 확인해주세요.',
+		        		  showConfirmButton: false,
+		        		  timer: 1500
+		        		})
 			      },
 			      dataType: 'json'
 			    });
-	  }
 	  })//로그인
 	  
 	  //로그아웃
@@ -80,7 +90,7 @@ $(function(){
 	}) //function
 		
 	//회원가입 - 아이디 중복체크
-	  $(document).ready(function() {
+	  $(document).ready(function(){
 	    $("#newEmpId").blur(function() {
 	      var id = $(this).val();
 	      $.ajax({
@@ -110,6 +120,7 @@ $(function(){
 	        }
 	      });
 	    });
+		
 	  });
 </script>
 
@@ -145,8 +156,8 @@ $(function(){
             <label for="">비밀번호</label>
           </div>
           <div class="remember-forgot">
-            <label id="idSave"><input type="checkbox" />아이디 저장 </label>
-            <label><a id="passSearch" style="float: right"> 비밀번호 찾기</a></label>
+            <label id="idSave"><input type="checkbox" name="chkid" value="check"/>아이디 저장 </label>
+            <label><a href="#" id="passSearch" style="float: right" class="find-link"> 비밀번호 찾기</a></label>
           </div>
           <br />
           <button type="button" class="btn">Login</button>
