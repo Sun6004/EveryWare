@@ -65,7 +65,7 @@ public class EmpDaoImpl implements IEmpDao{
 		    String empId = vo.getEmp_id();
 	        EmployeesVO empApprove = session.selectOne("emp.getEmpApprove", empId);
 	        res.setEmp_approve(empApprove.getEmp_approve());
-	        System.out.println("dao: " + empApprove.getEmp_approve());
+	        //System.out.println("dao: " + empApprove.getEmp_approve());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {		
@@ -180,16 +180,32 @@ public class EmpDaoImpl implements IEmpDao{
 	}
 
 	@Override
-	public int setPosi(Map<String, String> map) {
+	public int setPosi(EmployeesVO vo) {
 		SqlSession session = null;
 		int res = 0;
 		try {
 			session = MybatisSqlsessionFactory.getSqlSession();
-			res = session.update("emp.setPosi", map);
+			res = session.update("emp.setPosi", vo);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {		
+			if(session != null) session.commit();
+			if(session != null) session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int loginSession(EmployeesVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlsessionFactory.getSqlSession();
+			res = session.insert("emp.loginSession", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
 			if(session != null) session.commit();
 			if(session != null) session.close();
 		}

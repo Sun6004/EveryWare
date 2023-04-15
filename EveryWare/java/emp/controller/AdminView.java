@@ -37,7 +37,6 @@ public class AdminView extends HttpServlet {
 		for (EmployeesVO vo2 : list2) {
 			System.out.println(vo2.getEmp_id());
 		}
-		
 		request.getRequestDispatcher("/project/adminView.jsp").forward(request, response);
 	}
 	

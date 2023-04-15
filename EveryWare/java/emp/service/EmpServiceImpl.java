@@ -66,10 +66,16 @@ public class EmpServiceImpl implements IEmpservice{
 		// TODO Auto-generated method stub
 		return dao.allEmpList();
 	}
+	
 	@Override
-	public int setPosi(Map<String, String> map) {
+	public int setPosi(EmployeesVO vo) {
 		// TODO Auto-generated method stub
-		return dao.setPosi(map);
+		return dao.setPosi(vo);
+	}
+	@Override
+	public int loginSession(EmployeesVO vo) {
+		// TODO Auto-generated method stub
+		return dao.loginSession(vo);
 	}
 	
 

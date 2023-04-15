@@ -35,6 +35,9 @@ public interface IEmpDao {
 	// 비밀번호찾기
 	public EmployeesVO findPass(String emp_id);
 	
-	// 직급수정
-	public int setPosi(Map<String, String> map);
+	// 직원 정보 수정
+	public int setPosi(EmployeesVO vo);
+	
+	//로그인 세션정보 저장(접속시간, 접속IP)
+	public int loginSession(EmployeesVO vo);
 }

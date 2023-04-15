@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import emp.service.EmpServiceImpl;
+import emp.vo.EmployeesVO;
 
 @WebServlet("/SetPosi.do")
 public class SetPosi extends HttpServlet {
@@ -21,15 +24,30 @@ public class SetPosi extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		
-		Map<String, String> map = new HashMap<>();
-		
-		String empId = request.getParameter("empId");
+		String empId = request.getParameter("id");
 		String posi = request.getParameter("posi");
+		String dept = request.getParameter("dept");
+		String mail = request.getParameter("empMail");
 		
-		map.put("emp_id", empId);
-		map.put("position_id", posi);
+		System.out.println(empId + "," +posi + "," + dept + "," + mail);
+		EmployeesVO vo = new EmployeesVO();
 		
-		int res = EmpServiceImpl.getInstance().setPosi(map);
+		vo.setEmp_id(empId);
+		if(posi != null) {
+			vo.setPosition_id(posi);	
+		}
+		if(dept != null) {
+			vo.setDept_id(dept);			
+		}
+		vo.setEmp_mail(mail);
+				
+		EmpServiceImpl.getInstance().setPosi(vo);
+//		Gson gson = new Gson();
+//		String res = null;
+//		res = gson.toJson("ok");
+//		
+//		response.getWriter().write(res);
+//		response.flushBuffer();
 		
 	}
 

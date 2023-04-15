@@ -31,6 +31,7 @@ public class IdCheck extends HttpServlet {
 		Gson gson = new Gson();
 		String res = null; //json으로 결과를 저장
 		
+		
 		if(cnt>0) {
 			res = gson.toJson("fail");
 		}else {res = gson.toJson("ok"); }

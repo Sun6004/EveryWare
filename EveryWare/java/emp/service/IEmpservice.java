@@ -27,5 +27,8 @@ public interface IEmpservice {
 	
 	public EmployeesVO findPass(String emp_id);
 
-	public int setPosi(Map<String, String> map);
+	public int setPosi(EmployeesVO vo);
+	
+	//로그인 세션정보 저장(접속시간, 접속IP)
+	public int loginSession(EmployeesVO vo);
 }
