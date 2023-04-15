@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 문서는 mybatis에서 처리할 SQL문을 작성하는 문서입니다... -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="email">
+	<!-- 동적쿼리 -->
+	<sql id="dynamicCondition">
+		<where>
+			<if test="!(stype=='' or sword=='')">
+				${stype} like '%${sword}%'
+			</if>
+		</where>
+	</sql>
+
+	<!-- resultMap 시작 -->
+	<resultMap type="emailVo" id="emailMap">
+		<result column="email_id" property="email_id" />
+		<result column="emp_id" property="emp_id" />
+		<result column="email_sender_name" property="email_sender_name" />
+		<result column="email_sender_mail" property="email_sender_mail" />
+		<result column="email_title" property="email_title" />
+		<result column="email_content" property="email_content" />
+		<result column="email_date" property="email_date" />
+		<collection column="email_id = email_id"
+			property="receivers" javaType="java.util.List" ofType="receiverVo"
+			select="selectReceivers"></collection>
+		<collection column="email_id = email_id" property="files"
+			javaType="java.util.List" ofType="fileVo" select="selectFiles"></collection>
+	</resultMap>
+
+	<select id="selectReceivers" resultType="receiverVo">
+		select r.emp_id as
+		emp_id, r.emp_mail as emp_mail, r.emp_name as emp_name
+		from v_receivers
+		r
+		inner join email m on r.email_id = m.email_id
+		where r.email_id
+		=#{email_id}
+	</select>
+
+	<select id="selectFiles" resultType="fileVo">
+		select file_path, file_name,
+		file_size
+		from email_files f
+		inner join email m on f.email_id =
+		m.email_id
+		where f.email_id = #{email_id}
+	</select>
+	<!-- resultMap 끝 -->
+
+	<!-- 보낸메일 리스트 -->
+	<select id="selectSendEmails" parameterType="string"
+		resultMap="emailMap">
+		select distinct email_id, emp_id, email_title,
+		to_char(email_date,'yyyy-mm-dd') as email_date ,email_content
+		from
+		email
+		where emp_id = #{emp_id}
+	</select>
+
+	<!-- 받은메일 리스트 -->
+	<select id="selectReceiveEmails" parameterType="string"
+		resultMap="emailMap">
+		select m.email_id as email_id,m.emp_id as emp_id,
+		(select
+		emp_name from employees e where e.emp_id = m.emp_id) as
+		email_sender_name,
+		(select emp_mail from employees e where e.emp_id =
+		m.emp_id) as
+		email_sender_mail,
+		m.email_title as email_title,
+		m.email_content as email_content,
+		to_char(m.email_date,'yyyy-mm-dd') as
+		email_date
+		from email m inner join receivers r
+		on m.email_id =
+		r.email_id
+		where r.emp_id = #{emp_id}
+	</select>
+
+	<!-- 한 개의 메일 조회 -->
+	<select id="selectEmail" parameterType="string"
+		resultMap="emailMap">
+		select distinct email_id, m.emp_id as emp_id,
+		(select
+		emp_name from employees e where m.emp_id = e.emp_id) as
+		email_sender_name,
+		(select emp_mail from employees e where m.emp_id =
+		e.emp_id) as
+		email_sender_mail,
+		email_title, email_content, email_date
+		from email m
+		where email_id = #{email_id}
+	</select>
+
+	<!-- 받은 메일 삭제 -->
+	<delete id="deleteEmail" parameterType="string">
+		delete from email where email_id = #{email_id}
+	</delete>
+
+
+<insert id="insertEmailById" parameterType="emailVo">
+      insert all
+      into email
+      values(email_seq.nextval, #{emp_id}, #{email_title}, #{email_content}, sysdate)
+      <foreach collection="receivers" item="receiverVo">
+         into receivers
+         values(email_seq.currval, #{receiverVo.emp_id})
+      </foreach>
+      <if test="files != null">
+         <foreach collection="files" item="fileVo">
+            into email_files
+            values(#{fileVo.file_path}, email_seq.currval, #{fileVo.file_name}, #{fileVo.file_size})
+         </foreach>
+       </if>
+       select * from dual
+   </insert>
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

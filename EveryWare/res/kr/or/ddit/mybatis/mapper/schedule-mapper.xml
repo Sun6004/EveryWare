@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="schedule">
+	<select id="selectAllSchedule" resultType="scheduleVo" parameterType="String">
+		select *
+		  from schedules
+		 where code = #{code} or sch_type = '회사'
+	</select>
+
+	<select id="selectSchedule" parameterType="String" resultType="scheduleVo">
+		select * from schedules where sch_id = #{sch_id}
+	</select>
+	
+	<!-- 부서와 사원 id 바꿔야됨 -->
+	<insert id="insertSchedule" parameterType="scheduleVo">
+		insert into schedules values (
+        case
+            when (select count(*) from schedules where substr(sch_id, 1, 8) = to_char(sysdate,'yyyymmdd')) = '0'
+            then to_char(sysdate,'yyyymmdd') || '001'
+		else (select to_char(max(sch_id)+1) from schedules where substr(sch_id, 1, 8) = to_char(sysdate,'yyyymmdd'))
+		 end,
+		#{emp_id}, #{sch_type}, #{sch_name}, #{sch_detail},
+		TO_TIMESTAMP(#{sch_startdate}, 'YYYY-MM-DD HH24:MI'),
+		TO_TIMESTAMP(#{sch_enddate}, 'YYYY-MM-DD HH24:MI'), #{sch_boolean}, #{code})
+	</insert>
+	
+	<update id="updateSchedule" parameterType="scheduleVo">
+		update schedules set sch_type = #{sch_type}, sch_name = #{sch_name}, sch_detail = #{sch_detail},
+		                     sch_startdate = TO_TIMESTAMP(#{sch_startdate}, 'YYYY-MM-DD HH24:MI'),
+		                     sch_enddate = TO_TIMESTAMP(#{sch_enddate}, 'YYYY-MM-DD HH24:MI'),
+		                     sch_boolean = #{sch_boolean} where sch_id = #{sch_id}
+	</update>
+	
+	<delete id="deleteSchedule" parameterType="String">
+		delete from schedules where sch_id = #{sch_id} 
+	</delete>
+	
+	<update id="resizeSchedule" parameterType="map">
+		update schedules set
+			sch_startdate = to_timestamp((select #{start} || to_char(sch_startdate, 'HH24:MI:SS') from schedules
+								      where sch_id = #{id}),
+							'YYYY-MM-DD HH24:MI:SS'),
+			sch_enddate   = to_timestamp((select #{end} || to_char(sch_enddate, 'HH24:MI:SS') from schedules
+						          where sch_id = #{id}),
+						    'YYYY-MM-DD HH24:MI:SS')
+		 where sch_id = #{id}
+	</update>
+	
+	<!-- 일정을 작성한 사원의 부서번호 -->
+	<select id="selectCode" parameterType="String" resultType="String">
+		select distinct(code) from schedules where emp_id = #{emp_id} 
+	</select>
+	
+	<!-- 부서번호를 받아와 부서에 속하는 직원들 조회 -->
+	<select id="selectEmp" parameterType="String" resultType="String">
+		select emp_id from employees where dept_id = #{dept_id}
+	</select>
+	
+	<select id="selectAllEmp" resultType="String">
+		select emp_id from employees
+	</select>
+		
+	<!-- 그 사원들에게 알림 날리기 -->	
+	<insert id="insertAlarm" parameterType="String">
+		insert into alarm values(case
+                         when (select count(*) from alarm where substr(alarm_id, 1, 8) = to_char(sysdate,'yyyymmdd')) = '0'
+                         then to_char(sysdate,'yyyymmdd') || '001'
+                         else (select to_char(max(alarm_id)+1) from alarm where substr(alarm_id, 1, 8) = to_char(sysdate,'yyyymmdd')) end,
+                         #{emp_id}, '부서일정', 1, sysdate, 'https://localhost/')
+	</insert>
+	
+	<insert id="insertComAlarm" parameterType="String">
+		insert into alarm values(case
+                         when (select count(*) from alarm where substr(alarm_id, 1, 8) = to_char(sysdate,'yyyymmdd')) = '0'
+                         then to_char(sysdate,'yyyymmdd') || '001'
+                         else (select to_char(max(alarm_id)+1) from alarm where substr(alarm_id, 1, 8) = to_char(sysdate,'yyyymmdd')) end,
+                         #{emp_id}, '회사일정', 1, sysdate, 'https://localhost/')
+	</insert>
+</mapper>

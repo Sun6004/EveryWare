@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="alarm">
+	<select id="selectAllAlarm" resultType="alarmVo" parameterType="String">
+		select * from alarm where emp_id = #{emp_id} and alarm_status = 1
+	</select>
+	
+	<select id="selectCount" resultType="int" parameterType="String">
+		select count(*) from alarm where emp_id = #{emp_id} and alarm_status = 1
+	</select>
+	
+	<update id="updateStatus" parameterType="String">
+		update alarm set alarm_status = 0 where alarm_id = #{alarm_id}
+	</update>
+	
+	<update id="updateAll" parameterType="String">
+		update alarm set alarm_status = 0 where emp_id = #{emp_id}
+	</update>
+</mapper>

@@ -12,7 +12,7 @@
 	</settings> 
 	<!-- typeAlais 설정하기 (VO여러개 설정가능)-->
 	<typeAliases>
-		<typeAlias type="everyware.vo.EmployeesVO" alias="empVo"/>
+		<typeAlias type="emp.vo.EmployeesVO" alias="empVo"/>
 		
 	</typeAliases>
 	

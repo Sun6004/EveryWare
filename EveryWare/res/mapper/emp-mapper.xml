@@ -16,9 +16,9 @@
 	
 	<!--회원가입 -->
 	<insert id="addEmp" parameterType="empVo">
-		insert into employees (emp_no, emp_id, emp_pass, emp_name, dept_id, emp_idno, emp_tel, emp_addr, emp_mail, emp_date)
+		insert into employees (emp_no, emp_id, emp_pass, emp_name, dept_id, emp_idno, emp_tel, emp_addr, emp_date)
 						values (emp_seq.nextval , #{emp_id}, #{emp_pass}, #{emp_name}, #{dept_id} , #{emp_idno}, #{emp_tel}, 
-						#{emp_addr}, #{emp_mail}, sysdate)
+						#{emp_addr}, sysdate)
 	</insert>
 		
 	<!--회원가입 승인 대기중인 사원 검색(관리자) -->	
@@ -49,8 +49,13 @@
 		select * from employees where emp_id = #{emp_id}
 	</select>
 	
-	<!-- 직급수정(관리자) -->
-	<update id="setPosi" parameterType="map">
-		update employees set position_id = #{position_id} where emp_id = #{emp_id}
+	<!-- 사원정보 수정(관리자) -->
+	<update id="setPosi" parameterType="empVo">
+		update employees set position_id = #{position_id}, dept_id = #{dept_id}, emp_mail = #{emp_mail} where emp_id = #{emp_id}
 	</update>
+	
+	<!-- 로그인 세션정보 저장(접속시간, 접속IP) -->
+	<insert id="loginSession" parameterType="empVo">
+		insert into login_log values (log_seq.nextval, #{emp_id}, #{log_time}, #{log_ip}, #{emp_name})
+	</insert>
 </mapper>
