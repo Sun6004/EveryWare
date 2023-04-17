@@ -194,4 +194,19 @@ public class ScheduleDaoImpl implements IScheduleDao {
 		
 		return cnt;
 	}
+
+	@Override
+	public List<ScheduleVO> selectList() {
+		SqlSession session = null;
+		List<ScheduleVO> list = null;
+		
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("schedule.selectList");
+		} finally {
+			session.close();
+		}
+		
+		return list;
+	}
 }

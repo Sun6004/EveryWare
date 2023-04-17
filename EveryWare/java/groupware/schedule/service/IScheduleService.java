@@ -21,4 +21,6 @@ public interface IScheduleService {
 	public int insertAlarm(String id);
 
 	public int insertComAlarm();
+	
+	public List<ScheduleVO> selectList();
 }

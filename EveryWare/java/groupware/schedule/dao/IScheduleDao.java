@@ -27,4 +27,6 @@ public interface IScheduleDao {
 	public int insertAlarm(String id);
 
 	public int insertComAlarm(String id);
+	
+	public List<ScheduleVO> selectList();
 }

@@ -40,4 +40,9 @@ public class AlarmServiceImpl implements IAlarmService {
 	public int updateAll(String id) {
 		return dao.updateAll(id);
 	}
+
+	@Override
+	public int deleteAlarm(String id) {
+		return dao.deleteAlarm(id);
+	}
 }

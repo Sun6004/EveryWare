@@ -82,4 +82,9 @@ public class ScheduleServiceImpl implements IScheduleService {
 		
 		return cnt;
 	}
+
+	@Override
+	public List<ScheduleVO> selectList() {
+		return dao.selectList();
+	}
 }

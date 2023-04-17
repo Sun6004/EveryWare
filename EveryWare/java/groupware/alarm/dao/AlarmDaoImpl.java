@@ -82,4 +82,20 @@ public class AlarmDaoImpl implements IAlarmDao {
 		
 		return cnt;
 	}
+
+	@Override
+	public int deleteAlarm(String id) {
+		SqlSession session = null;
+		int cnt = 0;
+		
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.delete("alarm.deleteAlarm", id);
+		} finally {
+			session.commit();
+			session.close();
+		}
+		
+		return cnt;
+	}
 }

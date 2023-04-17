@@ -1,4 +1,4 @@
-package groupware.alarm.controller;
+package groupware.schedule.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,24 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import groupware.alarm.service.AlarmServiceImpl;
-import groupware.alarm.service.IAlarmService;
-import groupware.alarm.vo.AlarmVO;
+import groupware.schedule.service.IScheduleService;
+import groupware.schedule.service.ScheduleServiceImpl;
+import groupware.schedule.vo.ScheduleVO;
 
-
-@WebServlet("/SelectAllAlarm.do")
-public class SelectAllAlarm extends HttpServlet {
+@WebServlet("/SelectList.do")
+public class SelectList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		
-		String id = request.getParameter("id");
-		
-		IAlarmService service = AlarmServiceImpl.getInstance();
-		List<AlarmVO> list = service.selectAllAlarm(id);
+		IScheduleService service = ScheduleServiceImpl.getInstance();
+		List<ScheduleVO> list = service.selectList();
 		
 		Gson gson = new Gson();
 		String data = gson.toJson(list);

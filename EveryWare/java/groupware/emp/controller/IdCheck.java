@@ -1,7 +1,6 @@
-package groupware.alarm.controller;
+package groupware.emp.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,32 +10,41 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import groupware.alarm.service.AlarmServiceImpl;
-import groupware.alarm.service.IAlarmService;
-import groupware.alarm.vo.AlarmVO;
+import groupware.emp.service.EmpServiceImpl;
+import groupware.emp.service.IEmpservice;
 
 
-@WebServlet("/SelectAllAlarm.do")
-public class SelectAllAlarm extends HttpServlet {
+@WebServlet("/IdCheck.do")
+public class IdCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		
-		String id = request.getParameter("id");
+		String newEmpId = request.getParameter("newEmpId");
 		
-		IAlarmService service = AlarmServiceImpl.getInstance();
-		List<AlarmVO> list = service.selectAllAlarm(id);
+		IEmpservice service = EmpServiceImpl.getInstance();
+		int cnt = service.idCheck(newEmpId);
 		
 		Gson gson = new Gson();
-		String data = gson.toJson(list);
-		response.getWriter().write(data);
+		String res = null; //json으로 결과를 저장
+		
+		
+		if(cnt>0) {
+			res = gson.toJson("fail");
+		}else {res = gson.toJson("ok"); }
+		
+		response.getWriter().write(res);
 		response.flushBuffer();
 	}
 
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

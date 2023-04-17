@@ -1,7 +1,6 @@
-package groupware.alarm.controller;
+package groupware.emp.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,34 +8,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import groupware.emp.service.EmpServiceImpl;
 
-import groupware.alarm.service.AlarmServiceImpl;
-import groupware.alarm.service.IAlarmService;
-import groupware.alarm.vo.AlarmVO;
-
-
-@WebServlet("/SelectAllAlarm.do")
-public class SelectAllAlarm extends HttpServlet {
+@WebServlet("/empApprove.do")
+public class EmpApprove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		
-		String id = request.getParameter("id");
+		String[] empIdList = request.getParameterValues("list[]");
+		System.out.println(empIdList);
+		int res = 0;
+		for (String empId : empIdList) {		
+			System.out.println("수정할 ID:" + empId);
+			res = EmpServiceImpl.getInstance().empApprove(empId);
 		
-		IAlarmService service = AlarmServiceImpl.getInstance();
-		List<AlarmVO> list = service.selectAllAlarm(id);
+		}
 		
-		Gson gson = new Gson();
-		String data = gson.toJson(list);
-		response.getWriter().write(data);
-		response.flushBuffer();
+		
+		if(res > 0) {
+			response.sendRedirect(request.getContextPath() + "/AdminView.do");
+		}
+
 	}
 
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

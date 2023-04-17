@@ -12,4 +12,6 @@ public interface IAlarmService {
 	public int updateStatus(String id);
 	
 	public int updateAll(String id);
+	
+	public int deleteAlarm(String id);
 }
