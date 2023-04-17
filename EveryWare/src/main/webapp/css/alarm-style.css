@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 #alarm-count {
 	position: static;
 	transform: tanslateY(-40px);
@@ -12,63 +13,63 @@
 
 /* 알림 모달 */
 #alarm-modal {
-  position: fixed;
-  top: 75px;
-  right: 50px;
-  padding: 10px;
-  width: 350px;
-  height: 525px;
-  overflow: auto;
-  z-index: 2;
-  background-color: white;
-  border-radius: 20px;
-  display: none;
+	position: fixed;
+	top: 75px;
+	right: 50px;
+	padding: 10px;
+	width: 350px;
+	height: 525px;
+	overflow: auto;
+	z-index: 11;
+	background-color: white;
+	border-radius: 20px;
+	display: none;
 }
 
 /* 알림 제목 */
 .al-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	padding: 10px;
+	background-color: #007bff;
+	color: white;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 
 /* 알림 내용 */
 .al-body {
-  padding: 10px;
+	padding: 10px;
 }
 
 /* 알림 아이템 */
 #accordion .card {
-  margin-bottom: 10px;
-  border-radius: 10px;
-  overflow: hidden;
+	margin-bottom: 10px;
+	border-radius: 10px;
+	overflow: hidden;
 }
 
 /* 알림 아이템 헤더 */
 #accordion .card-header {
-  background-color: #f7f7f7;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 20px;
+	background-color: #f7f7f7;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 20px;
 }
 
 #accordion .card-body {
-  font-size: 14px;
+	font-size: 14px;
 }
 /* 알림 아이템 제목 */
 .action {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 /* 알림 아이템 내용 */
 .collapse {
-  padding: 10px;
+	padding: 10px;
 }
 
 .card .card-header a {
@@ -90,4 +91,9 @@
 .card .card-body a:hover {
 	background: yellow;
 	color: black;
+}
+
+.alarm #alarmmoreinfo {
+	width: 100%;
+	align-items: center;
 }

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="../js/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript">
@@ -28,15 +29,13 @@ $(function(){
 			        	Swal.fire({
 			        		  icon: 'error',
 			        		  title:'로그인 실패!',
-			        		  text: '아이디와 비밀번호를 확인해주세요.',
+			        		  text: '아이디와 비밀번호를 확인해주세요.', 
 			        		  showConfirmButton: false,
 			        		  timer: 1500
 			        		})
 		
 			        } else {
-			        	if(empId == 'admin'){
-			        		window.location.href = '<%=request.getContextPath()%>/AdminView.do';
-			        	}else if (res.emp_approve == 1) {
+			        	if (res.emp_approve == 1) {
 		 	                window.location.href = 'MainPage.jsp';
 			            } else {
 			            	 Swal.fire({
@@ -69,11 +68,22 @@ $(function(){
 // 	      type: 'POST',
 <%-- 	      url: '<%=request.getContextPath()%>/logout.do', --%>
 // 				success : function(res) {
-// 					alert(res);
-// 					location.reload(); // 페이지 새로고침
+// 					Swal.fire({
+// 		        		  icon: 'success',
+// 		        		  title: "성공적으로 로그아웃 되었습니다.",
+// 		        		  showConfirmButton: false,
+// 		        		  timer: 1500
+// 		        		})
+<%-- 					window.location.href = '<%=request.getContextPath()%>/login.jsp'; --%>
 // 				},
 // 				error : function() {
-// 					alert('로그아웃 요청 실패');
+// 					 Swal.fire({
+// 		        		  icon: 'error',
+// 		        		  title:'로그아웃 실패',
+// 		        		  text: '',
+// 		        		  showConfirmButton: false,
+// 		        		  timer: 1500
+// 		        		})
 // 				},
 // 				dataType : 'json'
 // 			})
@@ -82,11 +92,37 @@ $(function(){
 // 		$('#join').on('click', function(){
 // 			 window.location.href = 'join.jsp';
 // 		})
-		
-		//비밀번호 찾기
-		$('#passSearch').on('click', function(){
-			window.location.href = 'find.jsp';
+			//비밀번호찾기 실행
+		$('#check').on('click', function(){
+			$.ajax({
+				type: 'POST',
+				url: '<%=request.getContextPath()%>/FindPass.do',
+				data : $('#findPass').serialize(),
+				success: function(res){
+					if(res == "null"){
+						Swal.fire({
+			        		  icon: 'error',
+			        		  title: '존재하지 않는 회원입니다.',
+			        		  text: '다시 입력해 주세요',
+			        		  showConfirmButton: false,
+			        		  timer: 1500
+			        		})
+					}else{
+						 Swal.fire({
+			        		  icon: 'success',
+			        		  title: "당신의 비밀번호는: "+res +"입니다.",
+			        		  showConfirmButton: false,
+			        		  timer: 1500
+			        		})
+					}
+				},
+				error : function(xhr){
+					alert("에러: "+xhr.xhr.status);
+				},
+				dataType: 'json'
+			});
 		})
+		
 	}) //function
 		
 	//회원가입 - 아이디 중복체크
@@ -156,7 +192,7 @@ $(function(){
             <label for="">비밀번호</label>
           </div>
           <div class="remember-forgot">
-            <label id="idSave"><input type="checkbox" name="chkid" value="check"/>아이디 저장 </label>
+            <label id="idSave"><input type="checkbox" name="chkid" value="check" style="display: inline;">아이디 저장 </label>
             <label><a href="#" id="passSearch" style="float: right" class="find-link"> 비밀번호 찾기</a></label>
           </div>
           <br />
@@ -216,6 +252,7 @@ $(function(){
             <label for="">주 소</label>
           </div>
 
+          
           <div class="remember-forgot"></div>
           <button type="submit" class="btn2" value="제출">Register</button>
           <div class="login-register">
@@ -223,6 +260,31 @@ $(function(){
           </div>
         </form>
       </div>
+      
+         <div class="form-box password">
+        <h2>비밀번호 찾기</h2>
+        <!-- 로그인 버튼 눌렀을 때 -->
+        <form id="findPass" class="findPass" method="post">
+          <div class="input-box">
+            <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+            <input type="text" id="empId3" name="empId3" required />
+            <label for="empId3">아이디</label>
+          </div>
+
+          <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+            <input type="text" required id="empName3" name="empName3" />
+            <label for="empName3">이 름</label>
+          </div>
+         
+          <br />
+          <button type="button" class="btn3" id="check">찾 기</button>
+          <div class="login-register">
+            <p><a href="#" class="sreach-link">로그인</a></p>
+          </div>
+        </form>     
+      </div>
+      
     </div>
     <script src="../js/Loginscript.js"></script>
   </body>

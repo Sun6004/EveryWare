@@ -32,11 +32,10 @@ $(function() {
 	<div class="alarm" id="alarm-modal">
 		<div class="al-header">
 			<span>알림</span>
-			<button id="allRead" title="모두 읽음 처리">
-				<span class="material-icons"> 모두 확인 </span>
-			</button>
+			<button id="allRead" title="모두 읽음 처리" class="btn btn-warning">모두 확인</button>
 		</div>
 		<div class="al-body" id="alarmBody"></div>
+		<button type="button" class="btn btn-info" id="alarmmoreinfo">더 보기+</button>
 	</div>
 	
 	

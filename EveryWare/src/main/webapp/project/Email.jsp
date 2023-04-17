@@ -15,6 +15,12 @@
 <title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.4.min.js"
 	type="text/javaScript"></script>
+<script src="http://localhost/EveryWare/js/summernote-lite.js"></script>
+<script src="http://localhost/EveryWare/js/summernote-ko-KR.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -66,7 +72,7 @@
 						data : checkedIds,
 						type : "post",
 						success : function(res) {
-							location.reload();
+							 location.reload(); 
 						},
 						error : function(xhr) {
 							alert(xhr.status);
@@ -81,7 +87,27 @@
 			$(this).find('.mail-detail').toggle();
 			//$(this).find('.mail-detail').css('display','block');
 		});
-
+		
+		$('#summernote').summernote({
+		      lang : 'ko-KR',              // default: 'en-US'
+		      height: 520,                 // set editor height
+		      minHeight: null,             // set minimum height of editor
+		      maxHeight: null,             // set maximum height of editor
+		      focus: true,                 // set focus to editable area after initializing summernote
+		      toolbar: [
+		         ['fontname', ['fontname']],
+		         ['fontsize', ['fontsize']],
+		         ['style', ['bold', 'italic', 'underline', 'clear']],
+		         ['color', ['color']],
+		         ['table', ['table']],
+		         ['para', ['paragraph']],
+		         ['insert', ['picture', 'link', 'video']],
+		         ['view', ['codeview']]
+		      ],
+		      fontNames: [ '맑은 고딕', '굴림', '돋움', '궁서', '바탕', 'HY견고딕', '휴먼둥근헤드라인', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica neue', 'Helvetica', 'Impact'],
+		      fontNamesIgnoreCheck: [ '맑은 고딕', '굴림', '돋움', '궁서', '바탕', 'HY견고딕', '휴먼둥근헤드라인', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica neue', 'Helvetica', 'Impact'],
+		      lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0']
+		   });
 	})
 	
 	
@@ -97,11 +123,11 @@
 }
 
 .mail-list, .mailTiel {
-	background: #162938;
-	color: white;
+	
+	color: black;
 }
 .mail-list{
-padding: 10px;
+padding: 3px;
 }
 .mail-detail {
 padding :10px;
@@ -111,14 +137,6 @@ padding :10px;
 	margin: 5px;
 }
 
-a {
-	margin-top :30px;
-	border-radius: 5px;
-	text-decoration: none;
-	color: black;
-	border: 1px solid blue;
-}
-
 #result3, .mail-detail {
 	display: none;
 }
@@ -126,7 +144,7 @@ a {
 button {
 	height: 40px;
 	width: 130px;
-	background: #4fa96a;
+	background: #04AA6D;
 	color: white;
 	border-radius: 10px;
 	border: 0;
@@ -145,33 +163,22 @@ input[type="text"] {
 	font-size: 16px;
 	border-radius: 4px;
 }
-#content {
-width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  font-size: 24px;
-}
 
 button:active {
 	background: white;
 	color: #162938;
 }
+h1{
+font-size : 50px;
+}
+
+
 
 #sedMailArea, #receiveMailArea {
 	padding-top: 20px;
 }
 
-#re {
-	background: #ffffff;
-	padding: 10px;
-	border-radius: 15px;
-	/* border: 2px dotted red; */
-	height: 900px;
-}
+
 
 .check {
 	width: 20px;
@@ -187,18 +194,22 @@ textarea {
 }
 
 table {
-	border-radius: 15px;
+	border-radius: 5px;
 	width: 100%;
+	border-collapse : collapse;
 }
 
 td {
-	font-size: 18px;
+	width : 25%;
+	/* text-align: center; */
+    border: 1px solid #f1f1f1;
+	font-size: 24px;
 	font-weight: bold;
 	height: 30px;
 }
 
 .lefttd {
-	width: 20%;
+	width: 2%;
 	height: 30px;
 	font-size: 24px;
 	font-weight: bold;
@@ -210,34 +221,47 @@ td input, textarea {
 	background-color: transparent;
 	outline: none;
 }
-
-
+.menu{
+ width : 25%;
+ background: #F3F3F3;
+    border: 1px solid lightgray;
+   height: 30px;
+   padding: 0.5em;
+   text-align: center;
+}
+.fileLink{
+	margin-top :30px;
+	border-radius: 5px;
+	text-decoration: none;
+	background: #04AA6D;
+	color: white;
+	/* border: 1px solid blue; */
+}
 </style>
 </head>
 <body>
-
-	
-	<div id='re'>
 
 		<button type="button" id='btn4' value='전체선택'>전체 선택</button>
 		<button type="button" id='receiveMail' value='받은 메일함'>받은 메일함</button>
 		<button type="button" id='sendMail' value='보낸 메일함'>보낸 메일함</button>
 		<button type="button" id='btn3' value='삭제'>삭제</button>
 		<button type="button" id='write' value='삭제'>이메일 작성</button>
-
+		
 
 
 		<div id='sedMailArea' class='mailarea'>
 			<div class='mailTiel'>
-				<table>
+				<table border="0">
+					
 					<tr>
-						<td>&nbsp;&nbsp;</td>
-						<td>수신자</td>
-						<td>날 짜</td>
-						<td>제 목</td>
+						<!-- <td>&nbsp;&nbsp;</td> -->
+						<td class ="menu">수신 이메일</td>
+						<td class ="menu">제 목</td>
+						<td class ="menu" style="width: 10px">수신자</td>
+						<td class ="menu">날 짜</td>
 					</tr>
 				</table>
-
+				
 			</div>
 			<%
 			List<EmailVO> sendList = (List<EmailVO>) request.getAttribute("send");
@@ -247,18 +271,25 @@ td input, textarea {
 			<!-- <input type="checkbox" class='check'> Test<br> -->
 			<div class='mail-list' id="<%=vo.getEmail_id()%>">
 			<div class="onoff">
-				<input type="checkbox" class='check'>&nbsp;&nbsp;
-				<%=rvo.getEmp_mail()%>
-				(<%=rvo.getEmp_name()%>) &nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;<%=vo.getEmail_date()%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<%=vo.getEmail_title()%> 
+				
+				<table>
+				<tr>
+				<td align="center"><input type="checkbox" class='check' style="float: left">
+				<%=rvo.getEmp_mail()%></td> 
+				<td align="center"><%=vo.getEmail_title()%></td>
+				<td align="center"><%=rvo.getEmp_name()%></td> 
+				<td align="center"><%=vo.getEmail_date()%></td> 
+				</tr>
+				</table>
+				
 				</div>
+				
 				<div class='mail-detail'>
 					<%
 					for (FileVO fvo : vo.getFiles()) {
 					%>
-					<a
-						href="<%=request.getContextPath()%>/EmailFileDownload.do?file=<%=fvo.getFile_name()%>"><%=fvo.getFile_name()%></a><br>
+					<a class="fileLink"
+						href="<%=request.getContextPath()%>/EmailFileDownload.do?file=<%=fvo.getFile_name()%>"><ion-icon name="download-outline"></ion-icon> <%=fvo.getFile_name()%></a><br>
 					<%
 					}
 					%>
@@ -278,32 +309,37 @@ td input, textarea {
 		<div id='receiveMailArea' class='mailarea'>
 			<div class='mailTiel'><table>
 					<tr>
-						<td>&nbsp;&nbsp;</td>
-						<td>발신자</td>
-						<td>날 짜</td>
-						<td>제 목</td>
+						<td class ="menu" >발신자 이메일</td>
+						<td class ="menu" >제 목</td>
+						<td class ="menu" >발신자</td>
+						<td class ="menu" >날 짜</td>
 					</tr>
 				</table></div>
 			<%
 			List<EmailVO> receiveList = (List<EmailVO>) request.getAttribute("receive");
 			for (EmailVO vo : receiveList) {
 			%>
-			<div class='mail-list'>
-				<input type="checkbox" class='check'>&nbsp;&nbsp;
-				<%=vo.getEmail_sender_mail()%>
-				(<%=vo.getEmail_sender_name()%>)&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;<%=vo.getEmail_date()%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;<%=vo.getEmail_title()%>
+			<div class='mail-list' id="<%=vo.getEmail_id()%>">
+			<table>
+			<tr>
+				<td align="center"><input type="checkbox" class='check' style="float: left">
+				
+				<%=vo.getEmail_sender_mail()%></td>
+				<td align="center"><%=vo.getEmail_title()%></td>
+				<td align="center"><%=vo.getEmail_sender_name()%></td> 
+				<td align="center"> <%=vo.getEmail_date()%></td>
+				
+				</tr>
+				</table>
 				<div class='mail-detail'>
-					<%=vo.getEmail_content()%>&nbsp;&nbsp;
 					<%
 					for (FileVO fvo : vo.getFiles()) {
 					%>
-					<a
-						href="<%=request.getContextPath()%>/EmailFileDownload.do?file=<%=fvo.getFile_name()%>"><%=fvo.getFile_name()%></a><br>
+					<a class="fileLink" href="<%=request.getContextPath()%>/EmailFileDownload.do?file=<%=fvo.getFile_name()%>"><ion-icon name="download-outline"></ion-icon> <%=fvo.getFile_name()%></a><br>
 					<%
 					}
 					%>
+					<%=vo.getEmail_content()%>
 				</div>
 			</div>
 			<%
@@ -333,11 +369,11 @@ td input, textarea {
 
 					<tr>
 						<td align="center" class="lefttd" style="background: #f1f1f1 ;  border-radius: 5px"><span>파일첨부</span></td>
-						<td><input type="file" name='file' style="background: #f1f1f1"></td>
+						<td><input type="file" name='file' ></td>
 					</tr>
 					<tr>
 						<td align="center" class="lefttd" style="background: #f1f1f1  ; border-radius: 5px" ><span>내용</span></td>
-						<td><textarea  id="content" rows="15" name='content'></textarea></td>
+						<td align="left"><textarea id="summernote" class="content" rows="15" name='content' "></textarea></td>
 					</tr>
 
 				</table>
